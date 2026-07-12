@@ -84,22 +84,35 @@ fi
 
 # 8. 验证
 echo "━━━ 8/8 验证 ━━━"
-sleep 3
-if lsof -i :3000 2>/dev/null | grep -q LISTEN; then
-  echo "  ✅ 服务器在线 (port 3000)"
+echo "  ⏳ 等待服务器启动..."
+
+# 轮询等待最多 30 秒
+for i in $(seq 1 15); do
+  if curl -sk https://localhost:3000/commands.js -o /dev/null 2>/dev/null; then
+    break
+  fi
+  sleep 2
+done
+
+if curl -sk https://localhost:3000/commands.js -o /dev/null 2>/dev/null; then
+  echo "  ✅ 服务器在线"
   ICONS_OK=0
   for icon in addRound_16 removeRound_16 toggleSign_16 convertFormat_16; do
-    STATUS=$(curl -sk -o /dev/null -w "%{http_code}" "https://localhost:3000/assets/${icon}.png" 2>/dev/null || echo "000")
+    STATUS=$(curl -sk -o /dev/null -w "%{http_code}" "https://localhost:3000/assets/${icon}.png" 2>/dev/null)
     if [ "$STATUS" = "200" ]; then ICONS_OK=$((ICONS_OK+1)); fi
   done
-  echo "  ✅ $ICONS_OK/4 图标 HTTP 200"
-  if [ $ICONS_OK -lt 4 ]; then
-    echo "  ⚠️  部分图标 404，可能 webpack 未生成 dist/assets"
-    echo "  手动运行: cd '$INSTALL_DIR' && npm run build:dev"
+  if [ $ICONS_OK -eq 4 ]; then
+    echo "  ✅ 4/4 图标正常"
+  else
+    echo "  ⚠️  $ICONS_OK/4 图标 404"
+    echo "  修复: cd '$INSTALL_DIR' && npm run build:dev"
   fi
 else
-  echo "  ❌ 服务器未启动！检查: $LOG"
-  echo "  手动启动: launchctl load '$PLIST_DST'"
+  echo "  ❌ 30秒后仍未响应"
+  echo "  检查日志: cat '$LOG'"
+  echo "  手动修复:"
+  echo "    cd '$INSTALL_DIR' && npm run build:dev"
+  echo "    cd '$INSTALL_DIR' && npm run dev-server &"
 fi
 
 echo ""
