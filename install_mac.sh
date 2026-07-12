@@ -2,7 +2,7 @@
 set -e
 
 REPO="https://github.com/RouE-559/ExcelKit.git"
-INSTALL_DIR="$HOME/Library/Application Support/ExcelKit"
+INSTALL_DIR="$HOME/.excelkit"
 WEF_DIR="$HOME/Library/Containers/com.microsoft.Excel/Data/Documents/wef"
 PLIST_DST="$HOME/Library/LaunchAgents/com.excelkit.server.plist"
 LOG="$HOME/Library/Logs/excelkit-server.log"
@@ -71,6 +71,7 @@ sed -i '' "s|/opt/homebrew/bin/node|$NODE_PATH|g" "$INSTALL_DIR/com.excelkit.ser
 sed -i '' "s|/usr/local/bin/node|$NODE_PATH|g" "$INSTALL_DIR/com.excelkit.server.plist" 2>/dev/null || true
 # 修正安装路径
 sed -i '' "s|/Users/lly/trae-project/ExcelKit|$INSTALL_DIR|g" "$INSTALL_DIR/com.excelkit.server.plist"
+sed -i '' "s|/Users/lly/Library|$HOME/Library|g" "$INSTALL_DIR/com.excelkit.server.plist"
 
 cp "$INSTALL_DIR/com.excelkit.server.plist" "$PLIST_DST"
 launchctl load "$PLIST_DST"

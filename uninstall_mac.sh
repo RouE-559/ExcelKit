@@ -1,6 +1,6 @@
 #!/bin/bash
 
-INSTALL_DIR="$HOME/Library/Application Support/ExcelKit"
+INSTALL_DIR="$HOME/.excelkit"
 WEF_DIR="$HOME/Library/Containers/com.microsoft.Excel/Data/Documents/wef"
 PLIST_DST="$HOME/Library/LaunchAgents/com.excelkit.server.plist"
 
