@@ -50,8 +50,15 @@ echo "━━━ 6/8 注册 ━━━"
 launchctl unload "$PLIST_DST" 2>/dev/null || true
 pkill -9 "Microsoft Excel" 2>/dev/null || true
 kill $(lsof -ti :3000) 2>/dev/null || true
-rm -rf "$WEF_DIR"/*
-rm -rf "$HOME/Library/Containers/com.Microsoft.OsfWebHost/Data"/* 2>/dev/null
+sleep 2
+# 彻底清除各级缓存
+rm -rf "$WEF_DIR"
+rm -rf "$HOME/Library/Containers/com.Microsoft.OsfWebHost/Data" 2>/dev/null
+rm -rf "$HOME/Library/Containers/com.microsoft.Excel/Data/Library/Caches" 2>/dev/null
+rm -rf "$HOME/Library/Caches/com.microsoft.Excel" 2>/dev/null
+rm -rf "$HOME/Library/WebKit/com.microsoft.Excel" 2>/dev/null
+# 杀掉残留的 Office 进程
+pkill -9 "OsfWebHost" 2>/dev/null || true
 mkdir -p "$WEF_DIR"
 cp "$INSTALL_DIR/manifest.xml" "$WEF_DIR/"
 echo "  ✅ manifest.xml → WEF"
