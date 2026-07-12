@@ -32,7 +32,7 @@ fi
 # 3. 安装依赖
 echo "━━━ 3/6 依赖 ━━━"
 cd "$INSTALL_DIR"
-npm install --silent 2>/dev/null
+npm install 2>&1
 echo "  ✅ node_modules 就绪"
 
 # 4. 安装 HTTPS 证书（新机器必需）
@@ -110,10 +110,11 @@ if curl -sk https://localhost:3000/commands.js -o /dev/null 2>/dev/null; then
   fi
 else
   echo "  ❌ 30秒后仍未响应"
+  echo ""
+  echo "  验证构建（如有报错请截图）:"
+  cd "$INSTALL_DIR" && npm run build:dev 2>&1
+  echo ""
   echo "  检查日志: cat '$LOG'"
-  echo "  手动修复:"
-  echo "    cd '$INSTALL_DIR' && npm run build:dev"
-  echo "    cd '$INSTALL_DIR' && npm run dev-server &"
 fi
 
 echo ""
