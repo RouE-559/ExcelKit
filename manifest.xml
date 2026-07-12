@@ -27,11 +27,6 @@
               <Group id="G">
                 <Label resid="g.label"/>
                 <Icon><bt:Image size="16" resid="i16"/><bt:Image size="32" resid="i32"/><bt:Image size="80" resid="i80"/></Icon>
-                <Control xsi:type="Button" id="TaskpaneButton">
-                  <Label resid="b1.label"/><Supertip><Title resid="b1.label"/><Description resid="b1.desc"/></Supertip>
-                  <Icon><bt:Image size="16" resid="i16"/><bt:Image size="32" resid="i32"/><bt:Image size="80" resid="i80"/></Icon>
-                  <Action xsi:type="ShowTaskpane"><TaskpaneId>id1</TaskpaneId><SourceLocation resid="Taskpane.Url"/></Action>
-                </Control>
                 <Control xsi:type="Menu" id="menuAddRound">
                   <Label resid="b2.label"/><Supertip><Title resid="b2.label"/><Description resid="b2.desc"/></Supertip>
                   <Icon><bt:Image size="16" resid="i16"/><bt:Image size="32" resid="i32"/><bt:Image size="80" resid="i80"/></Icon>
@@ -54,7 +49,15 @@
                   <Icon><bt:Image size="16" resid="i16t"/><bt:Image size="32" resid="i32t"/><bt:Image size="80" resid="i80t"/></Icon>
                   <Action xsi:type="ExecuteFunction"><FunctionName>toggleSign</FunctionName></Action>
                 </Control>
-                
+                <Control xsi:type="Menu" id="menuConvertFormat">
+                  <Label resid="b5.label"/><Supertip><Title resid="b5.label"/><Description resid="b5.desc"/></Supertip>
+                  <Icon><bt:Image size="16" resid="i16c"/><bt:Image size="32" resid="i32c"/><bt:Image size="80" resid="i80c"/></Icon>
+                  <Items>
+                    <Item id="cf1"><Label resid="c1.label"/><Supertip><Title resid="c1.label"/><Description resid="c1.desc"/></Supertip><Icon><bt:Image size="16" resid="i16c"/><bt:Image size="32" resid="i32c"/><bt:Image size="80" resid="i80c"/></Icon><Action xsi:type="ExecuteFunction"><FunctionName>convertTextToNumber</FunctionName></Action></Item>
+                    <Item id="cf2"><Label resid="c2.label"/><Supertip><Title resid="c2.label"/><Description resid="c2.desc"/></Supertip><Icon><bt:Image size="16" resid="i16c"/><bt:Image size="32" resid="i32c"/><bt:Image size="80" resid="i80c"/></Icon><Action xsi:type="ExecuteFunction"><FunctionName>convertNumberToText</FunctionName></Action></Item>
+                  </Items>
+                </Control>
+
               </Group>
             </OfficeTab>
           </ExtensionPoint>
@@ -66,29 +69,33 @@
         <bt:Image id="i16" DefaultValue="https://localhost:3000/assets/addRound_16.png"/><bt:Image id="i32" DefaultValue="https://localhost:3000/assets/addRound_32.png"/><bt:Image id="i80" DefaultValue="https://localhost:3000/assets/addRound_80.png"/>
         <bt:Image id="i16r" DefaultValue="https://localhost:3000/assets/removeRound_16.png"/><bt:Image id="i32r" DefaultValue="https://localhost:3000/assets/removeRound_32.png"/><bt:Image id="i80r" DefaultValue="https://localhost:3000/assets/removeRound_80.png"/>
         <bt:Image id="i16t" DefaultValue="https://localhost:3000/assets/toggleSign_16.png"/><bt:Image id="i32t" DefaultValue="https://localhost:3000/assets/toggleSign_32.png"/><bt:Image id="i80t" DefaultValue="https://localhost:3000/assets/toggleSign_80.png"/>
+        <bt:Image id="i16c" DefaultValue="https://localhost:3000/assets/convertFormat_16.png"/><bt:Image id="i32c" DefaultValue="https://localhost:3000/assets/convertFormat_32.png"/><bt:Image id="i80c" DefaultValue="https://localhost:3000/assets/convertFormat_80.png"/>
       </bt:Images>
       <bt:Urls>
         <bt:Url id="gs.url" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812"/>
         <bt:Url id="Commands.Url" DefaultValue="https://localhost:3000/commands.html"/>
-        <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/taskpane.html"/>
-      </bt:Urls>
+        </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="gs.title" DefaultValue="Mac Excel 加载项工具集"/>
         <bt:String id="g.label" DefaultValue="Mac Excel 加载项工具集"/>
-        <bt:String id="b1.label" DefaultValue="显示面板"/>
         <bt:String id="b2.label" DefaultValue="添加Round"/>
         <bt:String id="b3.label" DefaultValue="移除Round"/>
         <bt:String id="b4.label" DefaultValue="正负转换"/>
+        <bt:String id="b5.label" DefaultValue="格式转换"/>
+        <bt:String id="c1.label" DefaultValue="文本转数字"/>
+        <bt:String id="c2.label" DefaultValue="数字转文本"/>
         
         <bt:String id="p0.label" DefaultValue="精度 0 位"/><bt:String id="p1.label" DefaultValue="精度 1 位"/><bt:String id="p2.label" DefaultValue="精度 2 位"/><bt:String id="p3.label" DefaultValue="精度 3 位"/><bt:String id="p4.label" DefaultValue="精度 4 位"/><bt:String id="pc.label" DefaultValue="自定义精度..."/>
         
       </bt:ShortStrings>
       <bt:LongStrings>
         <bt:String id="gs.desc" DefaultValue="在「开始」选项卡的「公式助手」分组中使用这些工具"/>
-        <bt:String id="b1.desc" DefaultValue="打开公式助手操作面板"/>
         <bt:String id="b2.desc" DefaultValue="为选中单元格添加 ROUND 函数，下拉可切换精度"/><bt:String id="b3.desc" DefaultValue="移除选中单元格最外层的 ROUND 函数"/><bt:String id="b4.desc" DefaultValue="将选中单元格正数变负、负数变正"/>
         <bt:String id="p0.desc" DefaultValue="ROUND(x, 0) — 四舍五入到整数"/><bt:String id="p1.desc" DefaultValue="ROUND(x, 1) — 保留 1 位小数"/><bt:String id="p2.desc" DefaultValue="ROUND(x, 2) — 保留 2 位小数（默认）"/><bt:String id="p3.desc" DefaultValue="ROUND(x, 3) — 保留 3 位小数"/><bt:String id="p4.desc" DefaultValue="ROUND(x, 4) — 保留 4 位小数"/><bt:String id="pc.desc" DefaultValue="弹窗输入 0-15 之间的自定义精度"/>
-        
+        <bt:String id="b5.desc" DefaultValue="将文本单元格转为数字格式，或将数字单元格转为文本格式"/>
+        <bt:String id="c1.desc" DefaultValue="将选中区域中的文本型数字转换为真正的数字（支持货币符号、千位分隔符、负数括号）"/>
+        <bt:String id="c2.desc" DefaultValue="将选中区域中的数字转换为文本格式（保护浮点精度，跳过公式单元格）"/>
+
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>

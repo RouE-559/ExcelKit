@@ -1,0 +1,73 @@
+#!/bin/bash
+set -e
+
+REPO="https://github.com/RouE-559/ExcelKit.git"
+INSTALL_DIR="$HOME/Library/Application Support/ExcelKit"
+WEF_DIR="$HOME/Library/Containers/com.microsoft.Excel/Data/Documents/wef"
+PLIST_DST="$HOME/Library/LaunchAgents/com.excelkit.server.plist"
+LOG="$HOME/Library/Logs/excelkit-server.log"
+
+echo "╔══════════════════════════════════════╗"
+echo "║   ExcelKit 安装脚本                  ║"
+echo "╚══════════════════════════════════════╝"
+echo ""
+
+# 1. 检查环境
+echo "━━━ 1/5 环境 ━━━"
+command -v node &>/dev/null || { echo "❌ 请先安装 Node.js: brew install node"; exit 1; }
+command -v git &>/dev/null || { echo "❌ 请先安装 Git: xcode-select --install"; exit 1; }
+echo "  ✅ Node.js $(node -v)"
+
+# 2. 下载/更新代码
+echo "━━━ 2/5 代码 ━━━"
+if [ -d "$INSTALL_DIR/.git" ]; then
+    cd "$INSTALL_DIR" && git pull --ff-only 2>/dev/null
+    echo "  ✅ 已更新"
+else
+    rm -rf "$INSTALL_DIR"
+    git clone "$REPO" "$INSTALL_DIR"
+    echo "  ✅ 已下载"
+fi
+
+# 3. 安装依赖
+echo "━━━ 3/5 依赖 ━━━"
+cd "$INSTALL_DIR"
+npm install --silent 2>/dev/null
+echo "  ✅ node_modules 就绪"
+
+# 4. 停旧 + 清缓存 + 侧载
+echo "━━━ 4/5 注册 ━━━"
+launchctl unload "$PLIST_DST" 2>/dev/null || true
+pkill -9 "Microsoft Excel" 2>/dev/null || true
+kill $(lsof -ti :3000) 2>/dev/null || true
+rm -rf "$WEF_DIR"/*
+rm -rf "$HOME/Library/Containers/com.Microsoft.OsfWebHost/Data"/* 2>/dev/null
+mkdir -p "$WEF_DIR"
+cp "$INSTALL_DIR/manifest.xml" "$WEF_DIR/"
+echo "  ✅ manifest.xml → WEF"
+
+# 5. 安装 launchd 自启
+echo "━━━ 5/5 自启 ━━━"
+# 修正 node 路径
+NODE_PATH=$(which node)
+sed -i '' "s|/opt/homebrew/bin/node|$NODE_PATH|g" "$INSTALL_DIR/com.excelkit.server.plist" 2>/dev/null || true
+sed -i '' "s|/usr/local/bin/node|$NODE_PATH|g" "$INSTALL_DIR/com.excelkit.server.plist" 2>/dev/null || true
+# 修正安装路径
+sed -i '' "s|/Users/lly/trae-project/ExcelKit|$INSTALL_DIR|g" "$INSTALL_DIR/com.excelkit.server.plist"
+
+cp "$INSTALL_DIR/com.excelkit.server.plist" "$PLIST_DST"
+launchctl load "$PLIST_DST"
+sleep 4
+
+if lsof -i :3000 2>/dev/null | grep -q LISTEN; then
+    echo "  ✅ 服务器已启动 (localhost:3000)"
+else
+    echo "  ⚠️  检查日志: $LOG"
+fi
+
+echo ""
+echo "✅ ExcelKit 已安装，每次开机自动启动。"
+echo "   打开 Excel → 开始选项卡 → Mac Excel 加载项工具集"
+echo ""
+echo "   卸载命令:"
+echo "   curl -fsSL https://raw.githubusercontent.com/RouE-559/ExcelKit/main/uninstall_mac.sh | bash"
