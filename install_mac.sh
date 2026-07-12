@@ -30,13 +30,23 @@ else
 fi
 
 # 3. 安装依赖
-echo "━━━ 3/5 依赖 ━━━"
+echo "━━━ 3/6 依赖 ━━━"
 cd "$INSTALL_DIR"
 npm install --silent 2>/dev/null
 echo "  ✅ node_modules 就绪"
 
-# 4. 停旧 + 清缓存 + 侧载
-echo "━━━ 4/5 注册 ━━━"
+# 4. 安装 HTTPS 证书（新机器必需）
+echo "━━━ 4/6 证书 ━━━"
+npx office-addin-dev-certs install 2>/dev/null || true
+echo "  ✅ HTTPS 证书就绪"
+
+# 5. 验证构建
+echo "━━━ 5/6 构建 ━━━"
+npx webpack --mode development 2>/dev/null
+echo "  ✅ dist 已生成"
+
+# 6. 停旧 + 清缓存 + 侧载
+echo "━━━ 6/8 注册 ━━━"
 launchctl unload "$PLIST_DST" 2>/dev/null || true
 pkill -9 "Microsoft Excel" 2>/dev/null || true
 kill $(lsof -ti :3000) 2>/dev/null || true
@@ -46,8 +56,8 @@ mkdir -p "$WEF_DIR"
 cp "$INSTALL_DIR/manifest.xml" "$WEF_DIR/"
 echo "  ✅ manifest.xml → WEF"
 
-# 5. 安装 launchd 自启
-echo "━━━ 5/5 自启 ━━━"
+# 7. 安装 launchd 自启
+echo "━━━ 7/8 自启 ━━━"
 # 修正 node 路径
 NODE_PATH=$(which node)
 sed -i '' "s|/opt/homebrew/bin/node|$NODE_PATH|g" "$INSTALL_DIR/com.excelkit.server.plist" 2>/dev/null || true
@@ -63,6 +73,19 @@ if lsof -i :3000 2>/dev/null | grep -q LISTEN; then
     echo "  ✅ 服务器已启动 (localhost:3000)"
 else
     echo "  ⚠️  检查日志: $LOG"
+fi
+
+# 8. 验证图标
+echo "━━━ 8/8 验证 ━━━"
+sleep 2
+ICONS_OK=0
+for icon in addRound_16 removeRound_16 toggleSign_16 convertFormat_16; do
+  STATUS=$(curl -sk -o /dev/null -w "%{http_code}" "https://localhost:3000/assets/${icon}.png" 2>/dev/null)
+  if [ "$STATUS" = "200" ]; then ICONS_OK=$((ICONS_OK+1)); fi
+done
+echo "  ✅ $ICONS_OK/4 图标在线"
+if [ $ICONS_OK -lt 4 ]; then
+  echo "  ⚠️  部分图标缺失，检查: $LOG"
 fi
 
 echo ""
