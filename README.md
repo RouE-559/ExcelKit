@@ -55,9 +55,13 @@ ExcelKit/
 
 ## 兼容性
 
-- Excel for Mac (Microsoft 365)
-- Excel 2016+ for Windows
-- Excel on the web
+| 平台 | 状态 |
+|------|------|
+| Excel for Mac (Microsoft 365) | ✅ 已测试 |
+| Excel on Windows | ⚠️ 理论上兼容，未测试 |
+| Excel on the web | ⚠️ 理论上兼容，未测试 |
+
+> 本项目基于 Office JavaScript API 标准开发，Windows 和 Web 端理论上均可运行，但目前仅在 Mac 上完成功能验证。
 
 ## 许可
 
