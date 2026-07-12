@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+  xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="TaskPaneApp">
+  <Id>E024A0AC-BAAD-4F6C-BC51-362F56143FF9</Id>
+  <Version>2.0.0.0</Version>
+  <ProviderName>ExcelKit</ProviderName>
+  <DefaultLocale>zh-CN</DefaultLocale>
+  <DisplayName DefaultValue="Mac Excel 加载项工具集"/>
+  <Description DefaultValue="Mac Excel 加载项工具集"/>
+  <IconUrl DefaultValue="https://localhost:3000/assets/addRound_32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/addRound_80.png"/>
+  <SupportUrl DefaultValue="https://github.com/RouE-559/ExcelKit"/>
+  <AppDomains><AppDomain>localhost</AppDomain></AppDomains>
+  <Hosts><Host Name="Workbook"/></Hosts>
+  <DefaultSettings><SourceLocation DefaultValue="https://localhost:3000/taskpane.html"/></DefaultSettings>
+  <Permissions>ReadWriteDocument</Permissions>
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <Hosts>
+      <Host xsi:type="Workbook">
+        <DesktopFormFactor>
+          <GetStarted><Title resid="gs.title"/><Description resid="gs.desc"/><LearnMoreUrl resid="gs.url"/></GetStarted>
+          <FunctionFile resid="Commands.Url"/>
+          <ExtensionPoint xsi:type="PrimaryCommandSurface">
+            <OfficeTab id="TabHome">
+              <Group id="G">
+                <Label resid="g.label"/>
+                <Icon><bt:Image size="16" resid="i16"/><bt:Image size="32" resid="i32"/><bt:Image size="80" resid="i80"/></Icon>
+                <Control xsi:type="Button" id="TaskpaneButton">
+                  <Label resid="b1.label"/><Supertip><Title resid="b1.label"/><Description resid="b1.desc"/></Supertip>
+                  <Icon><bt:Image size="16" resid="i16"/><bt:Image size="32" resid="i32"/><bt:Image size="80" resid="i80"/></Icon>
+                  <Action xsi:type="ShowTaskpane"><TaskpaneId>id1</TaskpaneId><SourceLocation resid="Taskpane.Url"/></Action>
+                </Control>
+                <Control xsi:type="Menu" id="menuAddRound">
+                  <Label resid="b2.label"/><Supertip><Title resid="b2.label"/><Description resid="b2.desc"/></Supertip>
+                  <Icon><bt:Image size="16" resid="i16"/><bt:Image size="32" resid="i32"/><bt:Image size="80" resid="i80"/></Icon>
+                  <Items>
+                    <Item id="i0"><Label resid="p2.label"/><Supertip><Title resid="p2.label"/><Description resid="p2.desc"/></Supertip><Icon><bt:Image size="16" resid="i16"/><bt:Image size="32" resid="i32"/><bt:Image size="80" resid="i80"/></Icon><Action xsi:type="ExecuteFunction"><FunctionName>addRound2</FunctionName></Action></Item>
+                    <Item id="i1"><Label resid="p0.label"/><Supertip><Title resid="p0.label"/><Description resid="p0.desc"/></Supertip><Icon><bt:Image size="16" resid="i16"/><bt:Image size="32" resid="i32"/><bt:Image size="80" resid="i80"/></Icon><Action xsi:type="ExecuteFunction"><FunctionName>addRound0</FunctionName></Action></Item>
+                    <Item id="i2"><Label resid="p1.label"/><Supertip><Title resid="p1.label"/><Description resid="p1.desc"/></Supertip><Icon><bt:Image size="16" resid="i16"/><bt:Image size="32" resid="i32"/><bt:Image size="80" resid="i80"/></Icon><Action xsi:type="ExecuteFunction"><FunctionName>addRound1</FunctionName></Action></Item>
+                    <Item id="i3"><Label resid="p3.label"/><Supertip><Title resid="p3.label"/><Description resid="p3.desc"/></Supertip><Icon><bt:Image size="16" resid="i16"/><bt:Image size="32" resid="i32"/><bt:Image size="80" resid="i80"/></Icon><Action xsi:type="ExecuteFunction"><FunctionName>addRound3</FunctionName></Action></Item>
+                    <Item id="i4"><Label resid="p4.label"/><Supertip><Title resid="p4.label"/><Description resid="p4.desc"/></Supertip><Icon><bt:Image size="16" resid="i16"/><bt:Image size="32" resid="i32"/><bt:Image size="80" resid="i80"/></Icon><Action xsi:type="ExecuteFunction"><FunctionName>addRound4</FunctionName></Action></Item>
+                    <Item id="i5"><Label resid="pc.label"/><Supertip><Title resid="pc.label"/><Description resid="pc.desc"/></Supertip><Icon><bt:Image size="16" resid="i16"/><bt:Image size="32" resid="i32"/><bt:Image size="80" resid="i80"/></Icon><Action xsi:type="ExecuteFunction"><FunctionName>addRoundCustom</FunctionName></Action></Item>
+                  </Items>
+                </Control>
+                <Control xsi:type="Button" id="btnRemoveRound">
+                  <Label resid="b3.label"/><Supertip><Title resid="b3.label"/><Description resid="b3.desc"/></Supertip>
+                  <Icon><bt:Image size="16" resid="i16r"/><bt:Image size="32" resid="i32r"/><bt:Image size="80" resid="i80r"/></Icon>
+                  <Action xsi:type="ExecuteFunction"><FunctionName>removeRound</FunctionName></Action>
+                </Control>
+                <Control xsi:type="Button" id="btnToggleSign">
+                  <Label resid="b4.label"/><Supertip><Title resid="b4.label"/><Description resid="b4.desc"/></Supertip>
+                  <Icon><bt:Image size="16" resid="i16t"/><bt:Image size="32" resid="i32t"/><bt:Image size="80" resid="i80t"/></Icon>
+                  <Action xsi:type="ExecuteFunction"><FunctionName>toggleSign</FunctionName></Action>
+                </Control>
+                
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+    <Resources>
+      <bt:Images>
+        <bt:Image id="i16" DefaultValue="https://localhost:3000/assets/addRound_16.png"/><bt:Image id="i32" DefaultValue="https://localhost:3000/assets/addRound_32.png"/><bt:Image id="i80" DefaultValue="https://localhost:3000/assets/addRound_80.png"/>
+        <bt:Image id="i16r" DefaultValue="https://localhost:3000/assets/removeRound_16.png"/><bt:Image id="i32r" DefaultValue="https://localhost:3000/assets/removeRound_32.png"/><bt:Image id="i80r" DefaultValue="https://localhost:3000/assets/removeRound_80.png"/>
+        <bt:Image id="i16t" DefaultValue="https://localhost:3000/assets/toggleSign_16.png"/><bt:Image id="i32t" DefaultValue="https://localhost:3000/assets/toggleSign_32.png"/><bt:Image id="i80t" DefaultValue="https://localhost:3000/assets/toggleSign_80.png"/>
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="gs.url" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812"/>
+        <bt:Url id="Commands.Url" DefaultValue="https://localhost:3000/commands.html"/>
+        <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/taskpane.html"/>
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="gs.title" DefaultValue="Mac Excel 加载项工具集"/>
+        <bt:String id="g.label" DefaultValue="Mac Excel 加载项工具集"/>
+        <bt:String id="b1.label" DefaultValue="显示面板"/>
+        <bt:String id="b2.label" DefaultValue="添加Round"/>
+        <bt:String id="b3.label" DefaultValue="移除Round"/>
+        <bt:String id="b4.label" DefaultValue="正负转换"/>
+        
+        <bt:String id="p0.label" DefaultValue="精度 0 位"/><bt:String id="p1.label" DefaultValue="精度 1 位"/><bt:String id="p2.label" DefaultValue="精度 2 位"/><bt:String id="p3.label" DefaultValue="精度 3 位"/><bt:String id="p4.label" DefaultValue="精度 4 位"/><bt:String id="pc.label" DefaultValue="自定义精度..."/>
+        
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="gs.desc" DefaultValue="在「开始」选项卡的「公式助手」分组中使用这些工具"/>
+        <bt:String id="b1.desc" DefaultValue="打开公式助手操作面板"/>
+        <bt:String id="b2.desc" DefaultValue="为选中单元格添加 ROUND 函数，下拉可切换精度"/><bt:String id="b3.desc" DefaultValue="移除选中单元格最外层的 ROUND 函数"/><bt:String id="b4.desc" DefaultValue="将选中单元格正数变负、负数变正"/>
+        <bt:String id="p0.desc" DefaultValue="ROUND(x, 0) — 四舍五入到整数"/><bt:String id="p1.desc" DefaultValue="ROUND(x, 1) — 保留 1 位小数"/><bt:String id="p2.desc" DefaultValue="ROUND(x, 2) — 保留 2 位小数（默认）"/><bt:String id="p3.desc" DefaultValue="ROUND(x, 3) — 保留 3 位小数"/><bt:String id="p4.desc" DefaultValue="ROUND(x, 4) — 保留 4 位小数"/><bt:String id="pc.desc" DefaultValue="弹窗输入 0-15 之间的自定义精度"/>
+        
+      </bt:LongStrings>
+    </Resources>
+  </VersionOverrides>
+</OfficeApp>

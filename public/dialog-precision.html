@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; padding: 16px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    h3 { font-size: 14px; color: #333; }
+    input { width: 100%; padding: 8px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px; text-align: center; }
+    button { background: #0078d4; color: #fff; border: none; padding: 8px 24px; border-radius: 4px; cursor: pointer; font-size: 14px; }
+    button:hover { background: #106ebe; }
+  </style>
+</head>
+<body>
+  <h3>ROUND 小数位数 (0-15)</h3>
+  <input type="number" id="digits" min="0" max="15" value="2" autofocus />
+  <button id="ok">确定</button>
+
+  <script>
+    Office.onReady(function () {
+      document.getElementById("ok").onclick = function () {
+        var v = document.getElementById("digits").value;
+        Office.context.ui.messageParent(v);
+      };
+      document.getElementById("digits").onkeydown = function (e) {
+        if (e.key === "Enter") {
+          document.getElementById("ok").click();
+        }
+      };
+    });
+  </script>
+</body>
+</html>
